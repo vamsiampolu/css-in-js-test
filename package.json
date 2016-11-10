@@ -13,6 +13,7 @@
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
     "babel-eslint": "^7.1.0",
+    "babel-loader": "6.2.7",
     "babel-plugin-css-in-js": "^1.4.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
@@ -27,9 +28,16 @@
     "eslint-plugin-import": "^2.2.0",
     "eslint-plugin-jsx-a11y": "^3.0.1",
     "eslint-plugin-react": "^6.6.0",
+    "html-webpack-plugin": "2.24.1",
+    "html-webpack-template": "5.4.1",
     "jsdom": "^9.8.3",
     "mocha": "^3.1.2",
+    "npm-install-webpack-plugin": "4.0.4",
     "react-addons-test-utils": "^15.3.2",
-    "sinon": "^1.17.6"
+    "sinon": "^1.17.6",
+    "webpack": "1.13.3",
+    "webpack-dev-server": "1.16.2",
+    "webpack-dotenv-plugin": "1.4.0",
+    "webpack-validator": "2.2.9"
   }
 }
