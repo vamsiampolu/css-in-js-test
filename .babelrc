@@ -26,7 +26,7 @@
         "transformOptions":{
             "presets":["env"]
         },
-        "bundleFile": "./app/bundle.css"
+        "bundleFile": "./build/bundle.css"
       }
     ]
   ]

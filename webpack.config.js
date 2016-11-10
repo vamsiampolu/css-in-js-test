@@ -52,11 +52,6 @@ module.exports = validator({
           cacheDirectory: true,
         },
       },
-      {
-        test: /\.css$/,
-        loader: 'css',
-        include: APP_PATH,
-      },
     ],
   },
   plugins: [

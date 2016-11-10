@@ -2,7 +2,7 @@ import React from 'react';
 import { render } from 'react-dom';
 import LoremIpsum from 'react-lorem-component';
 import cx from 'classnames';
-import './bundle.css';
+import Helmet from 'react-helmet';
 
 const styles = cssInJs({
   red: {
@@ -12,9 +12,17 @@ const styles = cssInJs({
 });
 
 const redClass = cx(styles.red);
+const cssLink = {
+  rel: 'stylesheet',
+  type: 'text/css',
+  href: './bundle.css',
+};
 
 function HelloWorld() {
-  return (<h2 className={redClass}><LoremIpsum /></h2>);
+  return (<h2 className={redClass}>
+    <Helmet link={[cssLink]} />
+    <LoremIpsum />
+  </h2>);
 }
 
 const root = document.getElementById('root');
