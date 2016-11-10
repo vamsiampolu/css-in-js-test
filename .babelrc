@@ -22,9 +22,11 @@
           "tablet":"media only screen and (max-width: 992px)",
           "desktop":"media only screen and (max-width: 1200px)"
         },
+        "identifier": "cssInJs",
         "transformOptions":{
             "presets":["env"]
-        }
+        },
+        "bundleFile": "./app/bundle.css"
       }
     ]
   ]

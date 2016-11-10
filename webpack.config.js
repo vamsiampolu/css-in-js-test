@@ -1,74 +1,80 @@
 const webpack = require('webpack');
-const validator = require('webpack-validator')
+const validator = require('webpack-validator');
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin')
-const template = require('html-webpack-template')
-const NpmInstallPlugin = require('npm-install-webpack-plugin')
-const DotEnvPlugin = require('webpack-dotenv-plugin')
-const APP_PATH = path.resolve('./app')
-const BUILD_PATH = path.resolve('./build')
-const SPEC_PATH = path.resolve('./spec')
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const template = require('html-webpack-template');
+const NpmInstallPlugin = require('npm-install-webpack-plugin');
+const DotEnvPlugin = require('webpack-dotenv-plugin');
 
-const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin
+const APP_PATH = path.resolve('./app');
+const BUILD_PATH = path.resolve('./build');
+const SPEC_PATH = path.resolve('./spec');
+
+const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin;
 
 module.exports = validator({
-  entry:`${APP_PATH}/index.js`,
-  output:{
-    filename:'bundle.js',
-    path:BUILD_PATH
+  entry: `${APP_PATH}/index.js`,
+  output: {
+    filename: 'bundle.js',
+    path: BUILD_PATH,
   },
-  devtool:'eval-source-map',
-  devServer:{
-    inline:true,
-    hot:true,
-    host:process.env.HOST || '0.0.0.0',
-    port:process.env.PORT || 3000,
-    stats:'errors-only',
-    historyApiFallback:true,
-    contentBase:BUILD_PATH,
-    watchOptions:{
-      aggregateTimeout:300,
-      poll:1000
-    }
+  devtool: 'eval-source-map',
+  devServer: {
+    inline: true,
+    hot: true,
+    host: process.env.HOST || '0.0.0.0',
+    port: process.env.PORT || 3000,
+    stats: 'errors-only',
+    historyApiFallback: true,
+    contentBase: BUILD_PATH,
+    watchOptions: {
+      aggregateTimeout: 300,
+      poll: 1000,
+    },
   },
-  module:{
-    preLoaders:[
+  module: {
+    preLoaders: [
       {
-        test:/\.jsx?/,
-        loader:'eslint',
-        include:[
+        test: /\.jsx?/,
+        loader: 'eslint',
+        include: [
           APP_PATH,
-          SPEC_PATH
-        ]
-      }
+          SPEC_PATH,
+        ],
+      },
     ],
-    loaders:[
+    loaders: [
       {
-        test:/\.jsx?/,
-        loader:'babel',
-        include:APP_PATH,
-        query:{
-          cacheDirectory:true
-        }
-      }
-    ]
+        test: /\.jsx?/,
+        loader: 'babel',
+        include: APP_PATH,
+        query: {
+          cacheDirectory: true,
+        },
+      },
+      {
+        test: /\.css$/,
+        loader: 'css',
+        include: APP_PATH,
+      },
+    ],
   },
-  plugins:[
+  plugins: [
     new HotModuleReplacementPlugin(),
     new DotEnvPlugin({
-      sample:'./.env.default',
-      path:'./.env'
+      sample: './.env.default',
+      path: './.env',
     }),
     new NpmInstallPlugin({
-      dev(module,path) {
-        return (/(^babel-?.*|.*-plugin$|.*-loader)/).test(module)
-      }
+      dev(module) {
+        return (/(^babel-?.*|.*-plugin$|.*-loader)/).test(module);
+      },
     }),
     new HtmlWebpackPlugin({
       inject: false,
-      mobile:true,
-      appMountId:'root',
-      template:template
-    })
-  ]
-})
+      mobile: true,
+      appMountId: 'root',
+      template,
+    }),
+  ],
+});
