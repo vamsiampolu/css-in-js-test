@@ -8,8 +8,8 @@ const DotEnvPlugin = require('webpack-dotenv-plugin')
 const APP_PATH = path.resolve('./app')
 const BUILD_PATH = path.resolve('./build')
 const SPEC_PATH = path.resolve('./spec')
-const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin
 
+const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin
 
 module.exports = validator({
   entry:`${APP_PATH}/index.js`,
@@ -32,12 +32,12 @@ module.exports = validator({
     }
   },
   module:{
-    preloaders:[
+    preLoaders:[
       {
         test:/\.jsx?/,
-        loader:'eslint'
+        loader:'eslint',
         include:[
-          SRC_PATH,
+          APP_PATH,
           SPEC_PATH
         ]
       }
@@ -46,18 +46,18 @@ module.exports = validator({
       {
         test:/\.jsx?/,
         loader:'babel',
-        include:SRC_PATH,
+        include:APP_PATH,
         query:{
           cacheDirectory:true
         }
       }
     ]
   },
-  plugins:{
+  plugins:[
     new HotModuleReplacementPlugin(),
     new DotEnvPlugin({
       sample:'./.env.default',
-      path:'./.env
+      path:'./.env'
     }),
     new NpmInstallPlugin({
       dev(module,path) {
@@ -70,5 +70,5 @@ module.exports = validator({
       appMountId:'root',
       template:template
     })
-  }
+  ]
 })

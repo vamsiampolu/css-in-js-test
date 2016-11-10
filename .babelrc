@@ -5,25 +5,25 @@
       "env",
       {
         "targets":{
-          "chrome":54,
+          "chrome":54
         }
       }
     ]
   ],
   "plugins":[
     ["transform-object-rest-spread", {
-        useBuiltIns:true
+        "useBuiltIns":true
       }
     ],
     ["css-in-js", {
       "vendorPrefixes":true,
       "mediaMap":{
-          phone: "media only screen and (max-width: 768px)",
-          tablet:"media only screen and (max-width: 992px)",
-          desktop:"media only screen and (max-width: 1200px)"
+          "phone": "media only screen and (max-width: 768px)",
+          "tablet":"media only screen and (max-width: 992px)",
+          "desktop":"media only screen and (max-width: 1200px)"
         },
-        transformOptions:{
-            presets:["env"]
+        "transformOptions":{
+            "presets":["env"]
         }
       }
     ]

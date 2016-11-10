@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "webpack",
+    "start": "webpack-dev-server"
   },
   "keywords": [],
   "author": "",
@@ -12,6 +14,7 @@
   "devDependencies": {
     "babel": "^6.5.2",
     "babel-cli": "^6.18.0",
+    "babel-core": "6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-loader": "6.2.7",
     "babel-plugin-css-in-js": "^1.4.0",
@@ -24,9 +27,10 @@
     "chai-enzyme": "^0.6.0",
     "enzyme": "^2.5.1",
     "eslint": "^3.9.1",
+    "eslint-config-airbnb": "13.0.0",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-import": "^2.2.0",
-    "eslint-plugin-jsx-a11y": "^3.0.1",
+    "eslint-plugin-jsx-a11y": "2.2.3",
     "eslint-plugin-react": "^6.6.0",
     "html-webpack-plugin": "2.24.1",
     "html-webpack-template": "5.4.1",
@@ -39,5 +43,8 @@
     "webpack-dev-server": "1.16.2",
     "webpack-dotenv-plugin": "1.4.0",
     "webpack-validator": "2.2.9"
+  },
+  "dependencies": {
+    "react-dom": "15.3.2"
   }
 }
