@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import './bottom-tear.svg'
 
 class MobileTearSheet extends Component {
 
@@ -33,7 +34,7 @@ class MobileTearSheet extends Component {
         <div style={prepareStyles(styles.container)}>
           {this.props.children}
         </div>
-        <img style={prepareStyles(styles.bottomTear)} role="presentation" src="https://raw.githubusercontent.com/callemall/material-ui/master/docs/src/www/images/bottom-tear.svg" />
+        <img style={prepareStyles(styles.bottomTear)} role="presentation" src="./bottom-tear.svg" />
       </div>
     );
   }

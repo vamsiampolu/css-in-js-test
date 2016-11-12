@@ -52,6 +52,10 @@ module.exports = validator({
           cacheDirectory: true,
         },
       },
+      {
+        test: /\.(jpe?g|png|gif|svg)$/i,
+        loader: 'file',
+      }
     ],
   },
   plugins: [
