@@ -1,28 +1,22 @@
 import React from 'react';
 import { render } from 'react-dom';
 import LoremIpsum from 'react-lorem-component';
-import cx from 'classnames';
-import Helmet from 'react-helmet';
+import { style, merge } from 'glamor';
+import { container } from 'flexboxgrid.js';
 
-const styles = cssInJs({
-  red: {
-    color: 'white',
-    backgroundColor: 'red',
-  },
+debugger
+const scary = style({
+  color: 'white',
+  backgroundColor: 'red',
 });
 
-const redClass = cx(styles.red);
-const cssLink = {
-  rel: 'stylesheet',
-  type: 'text/css',
-  href: './bundle.css',
-};
+const containerStyle = style(container);
+const redClass = merge(scary, containerStyle);
 
 function HelloWorld() {
-  return (<h2 className={redClass}>
-    <Helmet link={[cssLink]} />
+  return (<div className={redClass}>
     <LoremIpsum />
-  </h2>);
+  </div>);
 }
 
 const root = document.getElementById('root');

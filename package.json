@@ -17,7 +17,6 @@
     "babel-core": "6.18.2",
     "babel-eslint": "^7.1.0",
     "babel-loader": "6.2.7",
-    "babel-plugin-css-in-js": "^1.4.0",
     "babel-plugin-transform-object-rest-spread": "^6.16.0",
     "babel-preset-env": "0.0.7",
     "babel-preset-react": "^6.16.0",
@@ -25,7 +24,6 @@
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
     "chai-enzyme": "^0.6.0",
-    "css-loader": "0.25.0",
     "enzyme": "^2.5.1",
     "eslint": "^3.9.1",
     "eslint-config-airbnb": "13.0.0",
@@ -46,10 +44,9 @@
     "webpack-validator": "2.2.9"
   },
   "dependencies": {
-    "classnames": "2.2.5",
+    "glamor": "2.17.14",
     "react": "15.3.2",
     "react-dom": "15.3.2",
-    "react-helmet": "3.2.2",
     "react-lorem-component": "0.11.0"
   }
 }
