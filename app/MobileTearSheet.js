@@ -39,6 +39,10 @@ class MobileTearSheet extends Component {
   }
 }
 
+MobileTearSheet.contextTypes = {
+  muiTheme: PropTypes.object.isRequired,
+};
+
 MobileTearSheet.propTypes = {
   children: PropTypes.node,
   height: PropTypes.number.isRequired,
@@ -48,8 +52,5 @@ MobileTearSheet.defaultProps = {
   height: 500,
 };
 
-MobileTearSheet.contextTypes = {
-  muiTheme: PropTypes.object.isRequired,
-};
 
 export default MobileTearSheet;
