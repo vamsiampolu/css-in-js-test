@@ -53,9 +53,9 @@ module.exports = validator({
         },
       },
       {
-        test: /\.(jpe?g|png|gif|svg)$/i,
-        loader: 'file',
-      }
+        test: /\.svg$/i,
+        loader: 'svg-sprite!svgo',
+      },
     ],
   },
   plugins: [

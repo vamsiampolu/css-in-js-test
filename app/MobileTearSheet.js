@@ -1,43 +1,54 @@
-import React, { Component, PropTypes } from 'react';
-import './bottom-tear.svg'
+import React, { PropTypes } from 'react';
+import bottomTear from './bottomTear.svg';
 
-class MobileTearSheet extends Component {
+function Icon({ width = 16, height = 16, glyph, className = 'icon', style }) {
+  return (
+    <svg className={className} style={style} width={width} height={height}>
+      <use xlinkHref={glyph} />
+    </svg>
+  );
+}
 
-  render() {
-    const {
-      prepareStyles,
-    } = this.context.muiTheme;
+Icon.propTypes = {
+  width: PropTypes.oneOf(PropTypes.number, PropTypes.string),
+  height: PropTypes.oneOf(PropTypes.number, PropTypes.string),
+  glyph: PropTypes.string,
+  style: PropTypes.object,
+  className: PropTypes.string,
+};
 
-    const styles = {
-      root: {
-        marginBottom: 24,
-        marginRight: 24,
-        maxWidth: 360,
-        width: '100%',
-      },
-      container: {
-        border: 'solid 1px #d9d9d9',
-        borderBottom: 'none',
-        height: this.props.height,
-        overflow: 'hidden',
-      },
-      bottomTear: {
-        display: 'block',
-        position: 'relative',
-        marginTop: -10,
-        maxWidth: 360,
-      },
-    };
+function MobileTearSheet(props, context) {
+  const { prepareStyles } = context.muiTheme;
 
-    return (
-      <div style={prepareStyles(styles.root)}>
-        <div style={prepareStyles(styles.container)}>
-          {this.props.children}
-        </div>
-        <img style={prepareStyles(styles.bottomTear)} role="presentation" src="./bottom-tear.svg" />
+  const styles = {
+    root: {
+      marginBottom: 24,
+      marginRight: 24,
+      maxWidth: 360,
+      width: '100%',
+    },
+    container: {
+      border: 'solid 1px #d9d9d9',
+      borderBottom: 'none',
+      height: props.height,
+      overflow: 'hidden',
+    },
+    bottomTear: {
+      display: 'block',
+      position: 'relative',
+      marginTop: -10,
+      maxWidth: 360,
+    },
+  };
+
+  return (
+    <div style={prepareStyles(styles.root)}>
+      <div style={prepareStyles(styles.container)}>
+        {props.children}
       </div>
-    );
-  }
+      <Icon width="100%" style={prepareStyles(styles.bottomTear)} glyph={bottomTear} />
+    </div>
+  );
 }
 
 MobileTearSheet.contextTypes = {
