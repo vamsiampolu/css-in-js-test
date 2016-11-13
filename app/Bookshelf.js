@@ -13,17 +13,17 @@ function Book({ title, author, cover }) {
   if (cover == null) {
     Cover = LoremPixel;
   } else {
-    Cover = (<img width="200" height="400" alt={title} src={cover} />);
+    Cover = (<img width="200" height="100" alt={title} src={cover} />);
   }
 
   return (
     <Card>
       <CardHeader title={title} subtitle={author} />
       <CardMedia>
-        <Cover />
+        <Cover width={200} height={100} />
       </CardMedia>
       <CardText>
-        <LoremIpsum />
+        <LoremIpsum count={1} />
       </CardText>
       <CardActions>
         <FlatButton label="Buy Now" />
