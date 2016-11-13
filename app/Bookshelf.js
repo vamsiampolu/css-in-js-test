@@ -1,10 +1,11 @@
 import React, { PropTypes } from 'react';
 import { CardHeader, CardMedia, CardText, CardActions, Card } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
-import LoremIpsum from 'react-lorem-component';
 import { style } from 'glamor';
+import uuid from 'node-uuid';
 import { col, row } from 'flexboxgrid.js';
 import LoremPixel from './LoremPixel';
+import LoremIpsum from './LoremIpsum';
 
 const { string, arrayOf, shape } = PropTypes;
 
@@ -44,7 +45,7 @@ const rowStyle = style(row);
 export default function Bookshelf({ books }) {
   let Books;
   if (books != null && books.length > 0) {
-    Books = books.map(book => <div className={colAuto}><Book {...book} /></div>);
+    Books = books.map(book => <div key={uuid.v4()} className={colAuto}><Book {...book} /></div>);
   }
 
   return (

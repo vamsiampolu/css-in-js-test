@@ -1,6 +1,6 @@
 import React from 'react';
 import { render } from 'react-dom';
-import { style, merge } from 'glamor';
+import { style } from 'glamor';
 import { container, row, col as colXs } from 'flexboxgrid.js';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
@@ -18,7 +18,9 @@ const colXs9Style = style(colXs(9));
 
 const books = [
   {
+    /* eslint-disable no-script-url*/
     title: 'Javascript: The Good Parts',
+    /* eslint-enable no-script-url*/
     author: 'Douglas Crockford',
   },
   {
