@@ -21,16 +21,24 @@ function Book({ title, author, cover }) {
     height: '20em',
   };
 
+
+  const actionsStyle = {
+    bottom: '2.5em',
+    left: '6.5em',
+  };
+
+  const textStyle = { overflowY:'auto', };
+
   return (
     <Card containerStyle={containerStyle}>
       <CardHeader title={title} subtitle={author} />
       <CardMedia>
         <Cover width={200} height={100} />
       </CardMedia>
-      <CardText>
+      <CardText style={textStyle}>
         <LoremIpsum />
       </CardText>
-      <CardActions>
+      <CardActions style={actionsStyle}>
         <FlatButton label="Buy Now" />
       </CardActions>
     </Card>
