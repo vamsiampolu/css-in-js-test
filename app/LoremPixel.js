@@ -5,7 +5,7 @@ export default function LoremPixel({ url = 'http://lorempixel.com', width = 200,
   return (<img src={src} alt={alt} />);
 }
 
-const { string, number, oneOf } = Proptypes;
+const { string, number, oneOf } = PropTypes;
 
 LoremPixel.propTypes = {
   url: string,
