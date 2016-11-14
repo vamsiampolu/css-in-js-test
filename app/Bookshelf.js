@@ -27,7 +27,7 @@ function Book({ title, author, cover }) {
     left: '6.5em',
   };
 
-  const textStyle = { overflowY:'auto', };
+  const textStyle = { fontSize:10 };
 
   return (
     <Card containerStyle={containerStyle}>

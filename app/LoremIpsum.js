@@ -1,6 +1,6 @@
 import React, { PropTypes } from 'react';
-import EllipsisText from 'react-ellipsis-text';
 import loremIpsum from 'lorem-ipsum';
+import EllipsisText from './EllipsisText';
 
 export default function LoremIpsum({ sentences = 6, paragraphs = 2, maxVisibleChar = 300, more = '...' }) {
   const text = loremIpsum({
@@ -10,7 +10,7 @@ export default function LoremIpsum({ sentences = 6, paragraphs = 2, maxVisibleCh
     paragraphUpperBound: sentences,
     tail: more,
   });
-  return (<EllipsisText text={text} length={maxVisibleChar} />);
+  return (<EllipsisText text={text} limit={maxVisibleChar} />);
 }
 
 const { number, string } = PropTypes;
