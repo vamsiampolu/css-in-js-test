@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { style, merge } from 'glamor';
+import { style, nthChild, merge } from 'glamor';
 import uuid from 'node-uuid';
 import { col, row } from 'flexboxgrid.js';
 import Book from './Book';
@@ -12,9 +12,13 @@ const dontExpand = style({
   flexShrink: 0,
 });
 
-const headRoom = {
+const headRoom = style({
   marginTop: '2em',
-};
+});
+
+const firstChild = nthChild(1, { marginTop: 0 });
+const secondChild = nthChild(2, { marginTop: 0 });
+
 
 const colFixedWidth = merge(colAuto, dontExpand, headRoom);
 const rowStyle = style(row);
@@ -25,6 +29,8 @@ export default function Bookshelf({ books }) {
     Books = books.map(book => (<div
       key={uuid.v4()}
       className={colFixedWidth}
+      {...firstChild}
+      {...secondChild}
     >
       <Book {...book} />
     </div>),
