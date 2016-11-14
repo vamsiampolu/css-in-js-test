@@ -39,12 +39,27 @@ function Book({ title, author, cover }) {
     left: '6.5em',
   };
 
-  const textStyle = { fontSize: 10 };
+  const authorStyle = style({
+    fontSize: 12,
+    paddingLeft: 8,
+    position: 'relative',
+    bottom: 8,
+  });
+
+  const textStyle = {
+    fontSize: 10,
+    padding: 8,
+  };
 
   return (
     <Card containerStyle={containerStyle}>
-      <CardHeader  title={title} style={headerRootStyle} textStyle={cardHeaderTextStyle} titleStyle={titleStyle} />
-      <span>{author}</span>
+      <CardHeader 
+        title={title} 
+        style={headerRootStyle} 
+        textStyle={cardHeaderTextStyle} 
+        titleStyle={titleStyle} 
+      />
+      <span className={authorStyle}>{author}</span>
       <CardMedia>
         <Cover width={200} height={100} />
       </CardMedia>
