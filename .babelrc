@@ -5,7 +5,8 @@
       "env",
       {
         "targets":{
-          "chrome":54
+          "chrome":54,
+          "node":true
         }
       }
     ]

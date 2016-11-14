@@ -1,5 +1,8 @@
-compilers js:babel-register
+--require babel-polyfill
+--require jsdom-global/register
 --watch
 --recursive
 --bail
 --check-leaks
+--reporter spec
+
