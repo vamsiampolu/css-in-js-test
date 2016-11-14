@@ -4,6 +4,8 @@ import { style } from 'glamor';
 const centerImage = style({
   display: 'block',
   margin: 'auto',
+  paddingLeft: 8,
+  paddingRight: 8,
 });
 
 export default function LoremPixel({ url = 'http://lorempixel.com', width = 200, height = 400, alt = 'Placeholder image' }) {

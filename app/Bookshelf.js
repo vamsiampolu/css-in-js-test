@@ -1,5 +1,5 @@
 import React, { PropTypes } from 'react';
-import { CardHeader, CardMedia, CardText, CardActions, Card } from 'material-ui/Card';
+import { CardHeader, CardTitle, CardMedia, CardText, CardActions, Card } from 'material-ui/Card';
 import FlatButton from 'material-ui/FlatButton';
 import { style, merge } from 'glamor';
 import uuid from 'node-uuid';
@@ -17,21 +17,34 @@ function Book({ title, author, cover }) {
     Cover = (<img width="200" height="100" alt={title} src={cover} />);
   }
 
-  const containerStyle = {
-    height: '20em',
+  const cardHeaderTextStyle = {
+    paddingRight: 0,
   };
 
+  const containerStyle = {
+    height: '20em',
+    padding: 0,
+  };
+
+  const titleStyle = {
+    fontSize: 13,
+  };
+
+  const headerRootStyle = {
+    padding: 8,
+  };
 
   const actionsStyle = {
     bottom: '2.5em',
     left: '6.5em',
   };
 
-  const textStyle = { fontSize:10 };
+  const textStyle = { fontSize: 10 };
 
   return (
     <Card containerStyle={containerStyle}>
-      <CardHeader title={title} subtitle={author} />
+      <CardHeader  title={title} style={headerRootStyle} textStyle={cardHeaderTextStyle} titleStyle={titleStyle} />
+      <span>{author}</span>
       <CardMedia>
         <Cover width={200} height={100} />
       </CardMedia>
