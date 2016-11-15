@@ -9,7 +9,7 @@ const centerImage = style({
 });
 
 export default function LoremPixel({ url = 'http://lorempixel.com', width = 200, height = 400, alt = 'Placeholder image' }) {
-  const src = `${url}/${width}/${height}`;
+  const src = `${url}/${width}/${height}?t=${Date.now()}`;
   return (<img className={centerImage} src={src} alt={alt} />);
 }
 

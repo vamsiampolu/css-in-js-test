@@ -34,10 +34,11 @@ export default function Book({ title, author, cover }) {
   };
 
   const actionsStyle = {
-    padding: 4,
+    padding: 0,
     position: 'absolute',
-    bottom: '1%',
-    left: '49%',
+    bottom: 0,
+    right: 0,
+    marginTop: 5,
   };
 
   const authorStyle = style({
