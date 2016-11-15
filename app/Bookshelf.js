@@ -16,21 +16,46 @@ const headRoom = style({
   marginTop: '2em',
 });
 
-const firstChild = nthChild(1, { marginTop: 0 });
-const secondChild = nthChild(2, { marginTop: 0 });
-
 
 const colFixedWidth = merge(colAuto, dontExpand, headRoom);
 const rowStyle = style(row);
 
-export default function Bookshelf({ books }) {
+const booksByLanguage = {
+  javascript: [
+{
+  /* eslint-disable no-script-url*/
+  title: 'Javascript: The Good Parts',
+  /* eslint-enable no-script-url*/
+  author: 'Douglas Crockford',
+},
+{
+  title: 'Eloquent JavaScript',
+  author: 'Marijhn Haeverbacke',
+},
+{
+  title: 'JavaScript Allonge',
+  author: 'Reginald Braithwaite',
+},
+{
+  title: 'Programming JavaScript Applications',
+  author: 'Eric Elliot',
+},
+{
+  title: 'SurviveJS',
+  author: 'Juho Vesplainen',
+},
+  ]};
+
+
+
+export default function Bookshelf({ params }) {
+  const { language } = params;
   let Books;
+  const books = booksByLanguage[language];
   if (books != null && books.length > 0) {
     Books = books.map(book => (<div
       key={uuid.v4()}
       className={colFixedWidth}
-      {...firstChild}
-      {...secondChild}
     >
       <Book {...book} />
     </div>),

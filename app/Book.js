@@ -20,7 +20,7 @@ export default function Book({ title, author, cover }) {
   };
 
   const containerStyle = {
-    height: '16em',
+    height: '18em',
     padding: 0,
     position: 'relative',
   };

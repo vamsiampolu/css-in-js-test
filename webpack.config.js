@@ -17,6 +17,7 @@ module.exports = validator({
   output: {
     filename: 'bundle.js',
     path: BUILD_PATH,
+    publicPath: '/css-in-js-test/',
   },
   devtool: 'eval-source-map',
   devServer: {
