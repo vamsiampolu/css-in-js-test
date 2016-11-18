@@ -5,7 +5,7 @@ import Bookshelf from './Bookshelf';
 
 const routes = (
   <Route path="/" component={App}>
-    <IndexRoute path="/python" component={Bookshelf} />
+    <IndexRoute component={Bookshelf} />
     <Route path="/:language" component={Bookshelf} />
   </Route>
 );
