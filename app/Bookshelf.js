@@ -178,7 +178,10 @@ const booksByLanguage = {
 };
 
 export default function Bookshelf({ params }) {
-  const { language = 'python' } = params;
+  let { language } = params;
+  if (language == null) {
+    language = 'python';
+  }
   let Books;
   const books = booksByLanguage[language];
   if (books != null && books.length > 0) {

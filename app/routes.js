@@ -1,10 +1,11 @@
 import React from 'react';
-import { Route } from 'react-router';
+import { Route, IndexRoute } from 'react-router';
 import App from './Main';
 import Bookshelf from './Bookshelf';
 
 const routes = (
   <Route path="/" component={App}>
+    <IndexRoute path="/python" component={Bookshelf} />
     <Route path="/:language" component={Bookshelf} />
   </Route>
 );
