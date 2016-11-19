@@ -42,6 +42,11 @@ const base = {
       },
     ],
   },
+  plugins: [
+    new CleanPlugin('build', {
+      root: process.cwd(),
+    }),
+  ],
 };
 
 const hmr = {
@@ -116,9 +121,6 @@ const staticSite = {
     publicPath: '/css-in-js-test/',
   },
   plugins: [
-    new CleanPlugin('build', {
-      root: process.cwd(),
-    }),
     new StaticSitePlugin('main', paths, {}, {
       window: {
         crypto,
