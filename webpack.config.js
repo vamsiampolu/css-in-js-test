@@ -5,6 +5,7 @@ const merge = require('webpack-merge');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const template = require('html-webpack-template');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
+const CleanPlugin = require('clean-webpack-plugin');
 const StaticSitePlugin = require('static-site-generator-webpack-plugin');
 
 const APP_PATH = path.resolve('./app');
@@ -104,6 +105,9 @@ const paths = [
 
 const staticSite = {
   plugins: [
+    new CleanPlugin('build', {
+      root: process.cwd(),
+    }),
     new StaticSitePlugin('main', paths, {}),
   ],
   output: {
