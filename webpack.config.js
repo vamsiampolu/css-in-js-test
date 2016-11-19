@@ -119,8 +119,10 @@ const staticSite = {
     new CleanPlugin('build', {
       root: process.cwd(),
     }),
-    new StaticSitePlugin('main', paths, {
-      crypto,
+    new StaticSitePlugin('main', paths, {}, {
+      window: {
+        crypto,
+      },
     }),
   ],
   module: {

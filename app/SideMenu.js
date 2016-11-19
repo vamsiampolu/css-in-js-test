@@ -4,10 +4,16 @@ import { List, ListItem, MakeSelectable } from 'material-ui/List';
 import MobileTearSheet from './MobileTearSheet';
 
 export default function SideMenu() {
-  let route = window.location.pathname;
-  if (route === '/') {
+  let route;
+
+  if (window && window.location) {
+    route = window.location.pathname;
+  }
+
+  if (route == null || route === '/') {
     route = '/python';
   }
+
   const SelectableList = MakeSelectable(List);
   return (<MobileTearSheet>
     <SelectableList value={route}>
