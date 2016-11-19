@@ -104,14 +104,25 @@ const paths = [
 ];
 
 const staticSite = {
+  output: {
+    filename: 'bundle.js',
+    path: BUILD_PATH,
+    libraryTarget: 'umd',
+    publicPath: '/css-in-js-test/',
+  },
   plugins: [
     new CleanPlugin('build', {
       root: process.cwd(),
     }),
     new StaticSitePlugin('main', paths, {}),
   ],
-  output: {
-    publicPath: '/css-in-js-test/',
+  module: {
+    loaders: [
+      {
+        test: /\.ejs$/,
+        loader: 'ejs',
+      },
+    ],
   },
 };
 
