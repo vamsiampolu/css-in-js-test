@@ -2,6 +2,7 @@ const webpack = require('webpack');
 const validator = require('webpack-validator');
 const path = require('path');
 const merge = require('webpack-merge');
+
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const template = require('html-webpack-template');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
@@ -11,6 +12,8 @@ const StaticSitePlugin = require('static-site-generator-webpack-plugin');
 const APP_PATH = path.resolve('./app');
 const BUILD_PATH = path.resolve('./build');
 const SPEC_PATH = path.resolve('./spec');
+
+const crypto = require('crypto-browserify');
 
 const NPM_LIFECYCLE_EVENT = process.env.npm_lifecycle_event;
 
@@ -36,10 +39,6 @@ const base = {
         query: {
           cacheDirectory: true,
         },
-      },
-      {
-        test: /\.svg$/i,
-        loader: 'svg-sprite!svgo',
       },
     ],
   },
@@ -78,6 +77,14 @@ const html = {
       template,
     }),
   ],
+  module: {
+    loaders: [
+      {
+        test: /\.svg$/i,
+        loader: 'svg-sprite!svgo',
+      },
+    ],
+  },
 };
 
 const dev = {
@@ -97,16 +104,14 @@ const dev = {
 
 const paths = [
   '/',
-  '/python',
-  '/ruby',
-  '/javascript',
-  '/haskell',
+  '/python/',
+  '/ruby/',
+  '/javascript/',
+  '/haskell/',
 ];
 
 const staticSite = {
   output: {
-    filename: 'bundle.js',
-    path: BUILD_PATH,
     libraryTarget: 'umd',
     publicPath: '/css-in-js-test/',
   },
@@ -114,13 +119,22 @@ const staticSite = {
     new CleanPlugin('build', {
       root: process.cwd(),
     }),
-    new StaticSitePlugin('main', paths, {}),
+    new StaticSitePlugin('main', paths, {
+      crypto,
+    }),
   ],
   module: {
     loaders: [
       {
         test: /\.ejs$/,
         loader: 'ejs',
+      },
+      {
+        test: /\.svg$/,
+        loader: 'file',
+        include: [
+          APP_PATH,
+        ],
       },
     ],
   },
@@ -137,7 +151,7 @@ switch (NPM_LIFECYCLE_EVENT) {
     config = merge(base, dev, html);
     break;
 
-  case 'deploy':
+  case 'predeploy':
     config = merge(base, dev, staticSite);
     break;
 
