@@ -16,6 +16,7 @@ const defaultWrapperStyle = {
 const PENDING = 'PENDING';
 const LOADING = 'LOADING';
 const LOADED = 'LOADED';
+const FAILED = 'FAILED';
 
 export default class Image extends Component {
   constructor(props) {
@@ -30,6 +31,15 @@ export default class Image extends Component {
       };
     }
     this.onLoad = this.onLoad.bind(this);
+    this.onFail = this.onFail.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.src !== nextProps.src) {
+      this.setState({
+        status: LOADING,
+      });
+    }
   }
 
   onLoad() {
@@ -38,6 +48,11 @@ export default class Image extends Component {
     });
   }
 
+  onFail() {
+    this.setState({
+      status: FAILED,
+    });
+  }
   render() {
     const {
       src,
@@ -101,6 +116,7 @@ export default class Image extends Component {
         height={height}
         alt={alt}
         onLoad={this.onLoad}
+        onError={this.onFail}
       />);
     } else {
       image = (<img
@@ -110,12 +126,15 @@ export default class Image extends Component {
         height={height}
         role="presentation"
         onLoad={this.onLoad}
+        onError={this.onFail}
       />);
     }
 
     let statusIndicator = null;
     if (this.state.status === LOADING) {
-      statusIndicator = (<div className={loadingStyle}></div>);
+      statusIndicator = (<div className={loadingStyle} />);
+    } else if (this.state.status === FAILED) {
+      statusIndicator = (<div className={failureStyle} />);
     }
 
     return (<div className={wrapperStyle}>

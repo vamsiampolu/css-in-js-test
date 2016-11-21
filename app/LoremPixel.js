@@ -1,5 +1,6 @@
 import React, { PropTypes } from 'react';
 import { style } from 'glamor';
+import Image from './Image';
 
 const centerImage = style({
   display: 'block',
@@ -10,7 +11,13 @@ const centerImage = style({
 
 export default function LoremPixel({ url = 'http://lorempixel.com', width = 200, height = 400, alt = 'Placeholder image' }) {
   const src = `${url}/${width}/${height}?t=${Date.now()}`;
-  return (<img className={centerImage} src={src} alt={alt} />);
+  return (<Image
+    rounded={false}
+    width={width}
+    height={height}
+    className={centerImage}
+    src={src}
+  />);
 }
 
 const { string, number, oneOf } = PropTypes;

@@ -65,5 +65,31 @@ describe('Image', () => {
     expect(status).to.equal('LOADED');
     expect(instance.onLoad).to.have.been.called;
   });
+
+  it('has a state of FAILED if a bad src prop is supplied', () => {
+    const wrapper = mount(<Image
+        src="hsttp://lorempixel.com/200/200"
+        width={400}
+        height={200}
+        />);
+    const instance = wrapper.instance();
+    instance.onFail = sinon.spy(instance.onFail);
+    wrapper.update();
+    const status = wrapper.state().status;
+    expect(status).to.equal('FAILED');
+    expect(instance.onFail).to.have.been.called;
+  });
+
+  it('changes from a LOADED/FAILED state to a LOADING state when src updates', () => {
+    const wrapper = mount(<Image
+        src="hsttp://lorempixel.com/200/200"
+        width={400}
+        height={200}
+        />);
+    expect(wrapper.state().status).to.equal('LOADED');
+    const oldProps = wrapper.props();
+    wrapper.setProps({...oldProps, src: 'https://lorempixel.com/200/200'});
+    expect(wrapper.state().status).to.equal('LOADING');
+  });
 });
 
