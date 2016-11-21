@@ -134,7 +134,26 @@ export default class Image extends Component {
     if (this.state.status === LOADING) {
       statusIndicator = (<div className={loadingStyle} />);
     } else if (this.state.status === FAILED) {
-      statusIndicator = (<div className={failureStyle} />);
+      const crossArm = {
+        background: '#000',
+        width: 5,
+        height: 50,
+        position: 'absolute',
+        top: '30%',
+        left: '50%',
+        transform: 'rotate(45deg)',
+      };
+
+      const otherCrossArm = style({
+        ...crossArm,
+        transform: 'rotate(-45deg)',
+      });
+
+
+      statusIndicator = [
+        (<div className={style(crossArm)} />),
+        (<div className={otherCrossArm} />),
+      ];
     }
 
     return (<div className={wrapperStyle}>
@@ -157,9 +176,9 @@ Image.propTypes = {
 
 
 const crossArm = {
-  background: '#00',
+  background: '#000',
   width: 5,
-  height: 10,
+  height: 50,
   position: 'absolute',
   top: '30%',
   left: '50%',
@@ -169,13 +188,19 @@ const failureStyle = style({
   ...crossArm,
   transform: 'rotate(45deg)',
   ':before': {
-    ...crossArm,
     content: '',
+    background: '#000',
+    width: 5,
+    height: 50,
+    position: 'absolute',
     top: 0,
     left: 0,
     transform: 'rotate(-90deg)',
   },
 });
+
+
+// failureStyle = merge(failureStyle, otherCrossArm);
 
 const ring = keyframes({
   '0%': {

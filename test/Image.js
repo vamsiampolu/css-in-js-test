@@ -59,7 +59,7 @@ describe('Image', () => {
       height={200}
     />);
     const instance = wrapper.instance();
-    instance.onLoad = sinon.spy(instance.onLoad);
+    instance.onLoad = sinon.spy(instance.onLoad, instance);
     wrapper.update();
     const status = wrapper.state().status;
     expect(status).to.equal('LOADED');
@@ -73,7 +73,7 @@ describe('Image', () => {
         height={200}
         />);
     const instance = wrapper.instance();
-    instance.onFail = sinon.spy(instance.onFail);
+    instance.onFail = sinon.spy(instance.onFail, instance);
     wrapper.update();
     const status = wrapper.state().status;
     expect(status).to.equal('FAILED');
