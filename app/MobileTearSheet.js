@@ -30,8 +30,8 @@ function MobileTearSheet(props, context) {
     container: {
       border: 'solid 1px #d9d9d9',
       borderBottom: 'none',
-      height: props.height,
       overflow: 'hidden',
+      height: '100%',
     },
     bottomTear: {
       display: 'block',
