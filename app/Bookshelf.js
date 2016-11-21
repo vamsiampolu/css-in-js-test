@@ -1,7 +1,7 @@
 import React, { PropTypes } from 'react';
 import { style, merge } from 'glamor';
 import uuid from 'node-uuid';
-import { col, row } from 'flexboxgrid.js';
+import { col, row, between } from 'flexboxgrid.js';
 import Book from './Book';
 
 const { object } = PropTypes;
@@ -17,7 +17,7 @@ const headRoom = style({
 });
 
 
-const colFixedWidth = merge(colAuto, dontExpand, headRoom);
+const colFixedWidth = merge(colAuto, dontExpand, headRoom, style(between));
 const rowStyle = style(row);
 
 const booksByLanguage = {
