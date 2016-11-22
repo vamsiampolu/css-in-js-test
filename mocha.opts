@@ -1,5 +1,5 @@
 --require babel-polyfill
---require jsdom-global/register
+--require ./util.js
 --watch
 --recursive
 --bail
