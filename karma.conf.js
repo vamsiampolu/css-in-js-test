@@ -1,50 +1,67 @@
 // Karma configuration
 // Generated on Wed Nov 23 2016 10:52:13 GMT+1100 (AEDT)
+const webpackConfig = require('./webpack.config.js');
 
-const webpack = require('./webpack.config.js');
-
-module.exports = function (config) {
+module.exports = function karmaConfig(config) {
   config.set({
     basePath: '',
-    frameworks: ['mocha', 'chai'],
+    frameworks: ['mocha'],
     files: [
-      'test/*.js',
-      'test/**/*.js',
+      {
+        pattern: './app/util.js',
+        watched: false,
+        served: true,
+        included: true,
+      },
     ],
-    exclude: [
-      'node_modules/**/**',
-    ],
-    webpack,
-    preprocessors: {
-      'src/**/*.js': ['webpack', 'source-map'],
-      'src/*.js': ['webpack', 'source-map'],
-      'test/*.js': ['webpack', 'source-map'],
-      'test/**/*.js': ['webpack', 'source-map'],
+    webpack: webpackConfig,
+    webpackMiddleware: {
+      noInfo: true,
+      stats: 'errors-only',
     },
-
+    preprocessors: {
+      'app/util.js': ['webpack', 'sourcemap'],
+    },
+    babelPreprocessor: {
+      options: {
+        presets: [
+          'react',
+          [
+            'env',
+            {
+              targets: {
+                chrome: 52,
+                node: true,
+              },
+            },
+          ],
+        ],
+        plugins: [
+          'transform-class-properties',
+          [
+            'transform-object-rest-spread', {
+              useBuiltIns: true,
+            },
+          ],
+        ],
+      },
+    },
     plugins: [
+      'karma-spec-reporter',
       'karma-webpack',
       'karma-mocha',
       'karma-chai',
       'karma-sourcemap-loader',
       'karma-chrome-launcher',
-      'karma-firefox-laucher',
+      'karma-babel-preprocessor',
     ],
-
-    reporters: ['progress'],
+    reporters: ['spec'],
     port: 9876,
     colors: true,
     logLevel: config.LOG_INFO,
     autoWatch: true,
-    browsers: ['Chrome', 'Firefox'],
-
-
-    // Continuous Integration mode
-    // if true, Karma captures browsers, runs the tests and exits
+    browsers: ['Chrome'],
     singleRun: false,
-
-    // Concurrency level
-    // how many browser should be started simultaneous
     concurrency: Infinity,
-  })
-}
+  });
+};

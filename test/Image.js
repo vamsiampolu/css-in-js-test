@@ -2,13 +2,9 @@
 import React from 'react';
 import { expect } from 'chai';
 import { shallow, mount } from 'enzyme';
-import sinon from 'sinon';
-import loadDOM from '../loadDom';
 import Image from '../app/Image';
 
 describe('Image', () => {
-  beforeEach(done => loadDOM(done));
-
   it('exists', () => {
     expect(Image).to.not.equal(null);
   });
@@ -50,42 +46,37 @@ describe('Image', () => {
     expect(status).to.equal('LOADING');
   });
 
-  xit('has a state of LOADED if a good src prop is supplied', () => {
+  it('has a state of LOADED if a good src prop is supplied', () => {
     const wrapper = shallow(<Image
       width={400}
       height={200}
-      src="http://lorempixel.com/200/200"
+      src="doesn't matter.jpg"
     />);
-    const instance = wrapper.instance();
-    sinon.spy(instance, 'onLoad');
-    expect(instance.onLoad).to.have.been.called;
-    sinon.restore(instance.onLoad);
+    wrapper.find('img').simulate('load');
+    const status = wrapper.state('status');
+    expect(status).to.equal('LOADED');
   });
 
   it('has a state of FAILED if a bad src prop is supplied', () => {
     const wrapper = shallow(<Image
       width={200}
       height={200}
+      src="doICare.png"
     />);
-    const instance = wrapper.instance();
-    sinon.spy(instance, 'onFail');
-    expect(instance.onFail).to.have.been.called;
-    wrapper.setProps({
-      src: 'hsttp://lorempixel.com/200/200',
-    });
-    sinon.restore(instance.onFail);
+    wrapper.find('img').simulate('error');
+    const status = wrapper.state('status');
+    expect(status).to.equal('FAILED');
   });
 
-  xit('changes from a LOADED/FAILED state to a LOADING state when src updates', () => {
-    const wrapper = mount(<Image
-      src="hsttp://lorempixel.com/200/200"
+  it('changes from a LOADED/FAILED state to a LOADING state when src updates', () => {
+    const wrapper = shallow(<Image
+      src="something.jpg"
       width={400}
       height={200}
     />);
-    expect(wrapper.state().status).to.equal('LOADED');
-    const oldProps = wrapper.props();
-    wrapper.setProps({ ...oldProps, src: 'https://lorempixel.com/200/200' });
-    expect(wrapper.state().status).to.equal('LOADING');
+    wrapper.find('img').simulate('load');
+    wrapper.setProps({ src: 'https://lorempixel.com/200/200' });
+    expect(wrapper.state('status')).to.equal('LOADING');
   });
 });
 
