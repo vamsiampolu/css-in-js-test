@@ -6,6 +6,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const template = require('html-webpack-template');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const DotEnvPlugin = require('webpack-dotenv-plugin');
+const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const APP_PATH = path.resolve('./app');
 const BUILD_PATH = path.resolve('./build');
@@ -70,6 +71,7 @@ const hmr = {
         return (/(^babel-?.*|.*-plugin$|.*-loader)/).test(module);
       },
     }),
+    new DashboardPlugin(),
   ],
 };
 
