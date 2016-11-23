@@ -18,8 +18,8 @@ export default function loadDOM(documentLoaded) {
   jsdom.env({
     html,
     features: {
-      FetchExternalResources: ['img'],
-      ProcessExternalResources: ['img'],
+      FetchExternalResources: ['img', 'script'],
+      ProcessExternalResources: ['img', 'script'],
     },
     done(err, win) {
       global.window = win;

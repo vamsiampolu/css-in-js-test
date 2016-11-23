@@ -62,15 +62,17 @@ describe('Image', () => {
     sinon.restore(instance.onLoad);
   });
 
-  xit('has a state of FAILED if a bad src prop is supplied', () => {
+  it('has a state of FAILED if a bad src prop is supplied', () => {
     const wrapper = shallow(<Image
       width={200}
       height={200}
-      src="hsttp://lorempixel.com/200/200"
     />);
     const instance = wrapper.instance();
     sinon.spy(instance, 'onFail');
     expect(instance.onFail).to.have.been.called;
+    wrapper.setProps({
+      src: 'hsttp://lorempixel.com/200/200',
+    });
     sinon.restore(instance.onFail);
   });
 
