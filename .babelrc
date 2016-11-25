@@ -12,6 +12,12 @@
     ]
   ],
   "env": {
+    "development": {
+      "plugins":[
+        "transform-es2015-classes",
+        "react-hot-loader/babel"
+      ]
+    },
     "production": {
       "presets": ["babili"]
     }

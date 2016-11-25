@@ -106,7 +106,7 @@ const booksByLanguage = {
     },
     {
       title: 'A Whirlwind Tour of Python',
-      author: 'Jake VanderPlas',
+      author: 'Jake Hyun VanderPlas',
     },
     {
       title: "Non Programmer's Tutorial for Python",

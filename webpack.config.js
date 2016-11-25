@@ -45,6 +45,10 @@ const base = {
 };
 
 const hmr = {
+  entry: [
+    'react-hot-loader/patch',
+    `${APP_PATH}/index.js`,
+  ],
   devServer: {
     inline: true,
     hot: true,
