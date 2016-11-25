@@ -6,13 +6,17 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const template = require('html-webpack-template');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
+const BabiliPlugin = require('babili-webpack-plugin');
 
 const APP_PATH = path.resolve('./app');
 const BUILD_PATH = path.resolve('./build');
 const TEST_PATH = path.resolve('./test');
+const vendor = Object.keys(require('./package.json').dependencies);
 
+vendor.push('flexboxgrid.js');
 const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin;
 const DefinePlugin = webpack.DefinePlugin;
+const CommonsChunkPlugin = webpack.optimize.CommonsChunkPlugin;
 
 const base = {
   entry: `${APP_PATH}/index.js`,
@@ -120,11 +124,24 @@ const test = {
 };
 
 const prod = {
+  entry: {
+    app: `${APP_PATH}/index.js`,
+    vendor,
+  },
+  output: {
+    filename: '[name].js',
+    path: BUILD_PATH,
+    publicPath: '/css-in-js-test/',
+  },
   devtool: 'source-map',
   plugins: [
     new DefinePlugin({
       NODE_ENV: JSON.stringify('production'),
     }),
+    new CommonsChunkPlugin({
+      names: ['vendor', 'manifest'],
+    }),
+    new BabiliPlugin(),
   ],
 };
 
@@ -142,14 +159,17 @@ let config;
 switch (NPM_TASK) {
   case START:
   case START_DASHBOARD:
+    console.log('Development config with hmr enabled');
     config = merge(base, hmr, html);
     break;
   case BUILD:
   case BUILD_DASHBOARD:
+    console.log('One time development build config');
     config = merge(base, html);
     break;
   case PROD:
   case PROD_DASHBOARD:
+    console.log('Production config with minification and bundle splitting');
     config = merge(base, prod, html);
     break;
   case TEST:
