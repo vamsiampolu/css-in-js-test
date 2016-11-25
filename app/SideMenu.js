@@ -3,12 +3,13 @@ import { Link } from 'react-router';
 import { List, ListItem, makeSelectable } from 'material-ui/List';
 import MobileTearSheet from './MobileTearSheet';
 
+const SelectableList = makeSelectable(List);
+
 export default function SideMenu() {
   let route = window.location.pathname;
   if (route === '/') {
     route = '/python';
   }
-  const SelectableList = makeSelectable(List);
   return (<MobileTearSheet>
     <SelectableList value={route}>
       <ListItem

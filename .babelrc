@@ -19,7 +19,8 @@
       ]
     },
     "production": {
-      "presets": ["babili"]
+      "presets": ["babili"],
+      "passPerPreset": true
     }
   },
   "plugins":[
