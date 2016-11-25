@@ -5,7 +5,6 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const template = require('html-webpack-template');
 const NpmInstallPlugin = require('npm-install-webpack-plugin');
-const DotEnvPlugin = require('webpack-dotenv-plugin');
 const DashboardPlugin = require('webpack-dashboard/plugin');
 
 const APP_PATH = path.resolve('./app');
@@ -13,6 +12,7 @@ const BUILD_PATH = path.resolve('./build');
 const TEST_PATH = path.resolve('./test');
 
 const HotModuleReplacementPlugin = webpack.HotModuleReplacementPlugin;
+const DefinePlugin = webpack.DefinePlugin;
 
 const base = {
   entry: `${APP_PATH}/index.js`,
@@ -28,9 +28,6 @@ const base = {
         test: /\.jsx?/,
         loader: 'babel',
         include: [APP_PATH],
-        query: {
-          cacheDirectory: true,
-        },
       },
       {
         test: /\.svg$/i,
@@ -43,10 +40,7 @@ const base = {
     ],
   },
   plugins: [
-    new DotEnvPlugin({
-      sample: './.env.default',
-      path: './.env',
-    }),
+    new DashboardPlugin(),
   ],
 };
 
@@ -65,13 +59,15 @@ const hmr = {
     },
   },
   plugins: [
+    new DefinePlugin({
+      NODE_ENV: JSON.stringify('development'),
+    }),
     new HotModuleReplacementPlugin(),
     new NpmInstallPlugin({
       dev(module) {
         return (/(^babel-?.*|.*-plugin$|.*-loader)/).test(module);
       },
     }),
-    new DashboardPlugin(),
   ],
 };
 
@@ -112,21 +108,45 @@ const test = {
       },
     ],
   },
+  plugins: [
+    new DefinePlugin({
+      NODE_ENV: JSON.stringify('development'),
+    }),
+  ],
+};
+
+const prod = {
+  devtool: 'source-map',
+  plugins: [
+    new DefinePlugin({
+      NODE_ENV: JSON.stringify('production'),
+    }),
+  ],
 };
 
 const NPM_TASK = process.env.npm_lifecycle_event;
 
 const START = 'start';
+const START_DASHBOARD = 'start:dash';
 const BUILD = 'build';
+const BUILD_DASHBOARD = 'build:dash';
 const TEST = 'test';
+const PROD = 'build:prod';
+const PROD_DASHBOARD = 'build:prod:dashboard';
 
 let config;
 switch (NPM_TASK) {
   case START:
+  case START_DASHBOARD:
     config = merge(base, hmr, html);
     break;
   case BUILD:
+  case BUILD_DASHBOARD:
     config = merge(base, html);
+    break;
+  case PROD:
+  case PROD_DASHBOARD:
+    config = merge(base, prod, html);
     break;
   case TEST:
     config = merge(base, html, test);
