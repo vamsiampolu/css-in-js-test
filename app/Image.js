@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { style, keyframes, merge } from 'glamor';
+import { withState, withProps, compose, lifecycle } from 'recompose';
 
 const { string, number, bool, object } = PropTypes;
 
@@ -18,150 +19,162 @@ const LOADING = 'LOADING';
 const LOADED = 'LOADED';
 const FAILED = 'FAILED';
 
-export default class Image extends Component {
-  constructor(props) {
-    super(props);
-    if (props.src != null && typeof props.src === 'string') {
-      this.state = {
-        status: LOADING,
-      };
-    } else {
-      this.state = {
-        status: PENDING,
-      };
-    }
-    this.onLoad = this.onLoad.bind(this);
-    this.onFail = this.onFail.bind(this);
-  }
+export function LoadingIndicator() {
+  const ring = keyframes({
+    '0%': {
+      transform: 'rotate(0deg)',
+    },
+    '100%': {
+      transform: 'rotate(360deg)',
+    },
+  });
 
-  componentWillReceiveProps(nextProps) {
-    if (this.props.src !== nextProps.src) {
-      this.setState({
-        status: LOADING,
-      });
-    }
-  }
+  const loadingStyle = style({
+    position: 'absolute',
+    display: 'block',
+    width: 40,
+    height: 40,
+    top: '37%',
+    left: '37%',
+    borderRadius: 80,
+    boxShadow: '0 3px 0 0 #59ebff',
+    animation: `${ring} 1s linear infinite`,
+  });
 
-  onLoad() {
-    this.setState({
-      status: LOADED,
-    });
-  }
-
-  onFail() {
-    this.setState({
-      status: FAILED,
-    });
-  }
-  render() {
-    const {
-      src,
-      width,
-      height,
-      alt,
-      loadingStyle,
-      failureStyle,
-      rounded,
-      circle,
-    } = this.props;
-    const mainWrapperStyle = style({
-      ...defaultWrapperStyle,
-      width,
-      height,
-    });
-
-    let wrapperStyle = {};
-    if (rounded) {
-      const roundedStyle = style({
-        borderRadius: '10%',
-        overflow: 'hidden',
-      });
-
-      wrapperStyle = merge(mainWrapperStyle, roundedStyle);
-    } else if (circle) {
-      const circularStyle = style({
-        borderRadius: '50%',
-        overflow: 'hidden',
-      });
-
-      wrapperStyle = merge(mainWrapperStyle, circularStyle);
-    } else {
-      wrapperStyle = mainWrapperStyle;
-    }
-
-    const defaultImageStyle = style({
-      opacity: 0,
-      transisition: 'opacity 150ms ease',
-    });
-
-    const loadedImageStyle = style({
-      opacity: 1,
-    });
-
-    let imageStyle = defaultImageStyle;
-
-    if (this.state.status === LOADED) {
-      imageStyle = merge(defaultImageStyle, loadedImageStyle);
-    } else {
-      imageStyle = defaultImageStyle;
-    }
-
-
-    let image;
-    if (alt != null) {
-      image = (<img
-        className={imageStyle}
-        src={src}
-        width={width}
-        height={height}
-        alt={alt}
-        onLoad={this.onLoad}
-        onError={this.onFail}
-      />);
-    } else {
-      image = (<img
-        className={imageStyle}
-        src={src}
-        width={width}
-        height={height}
-        role="presentation"
-        onLoad={this.onLoad}
-        onError={this.onFail}
-      />);
-    }
-
-    let statusIndicator = null;
-    if (this.state.status === LOADING) {
-      statusIndicator = (<div className={loadingStyle} />);
-    } else if (this.state.status === FAILED) {
-      const crossArm = {
-        background: '#000',
-        width: 5,
-        height: 50,
-        position: 'absolute',
-        top: '30%',
-        left: '50%',
-        transform: 'rotate(45deg)',
-      };
-
-      const otherCrossArm = style({
-        ...crossArm,
-        transform: 'rotate(-45deg)',
-      });
-
-
-      statusIndicator = [
-        (<div className={style(crossArm)} />),
-        (<div className={otherCrossArm} />),
-      ];
-    }
-
-    return (<div className={wrapperStyle}>
-      {statusIndicator}
-      {image}
-    </div>);
-  }
+  return (<div {...loadingStyle} />);
 }
+
+export function ErrorIndicator() {
+  const crossArm = {
+    background: '#000',
+    width: 5,
+    height: 50,
+    position: 'absolute',
+    top: '30%',
+    left: '50%',
+    transform: 'rotate(45deg)',
+  };
+
+  const otherCrossArm = style({
+    ...crossArm,
+    transform: 'rotate(-45deg)',
+  });
+
+  return (<div>
+        <div {...style(crossArm)} />
+        <div {...otherCrossArm} />
+      </div>);
+}
+
+export function SimpleImage(props) {
+  const {
+    src,
+    width = 200,
+    height = 200,
+    rounded,
+    circle,
+    status,
+    onLoad,
+    onFail,
+  } = props;
+
+  const mainWrapperStyle = style({
+    backgroundColor: 'white',
+    backgroundSize: 'contain',
+    backgroundRepeat: 'none',
+    boxSizing: 'border-box',
+    position: 'relative',
+    width,
+    height,
+  });
+
+  const roundedStyle = style({
+    borderRadius: '10%',
+    overflow: 'hidden',
+  });
+
+  const circularStyle = style({
+    borderRadius: '50%',
+    overflow: 'hidden',
+  });
+
+  const defaultImageStyle = style({
+    opacity: 0,
+    transisition: 'opacity 150ms ease',
+  });
+
+  const loadedImageStyle = style({
+    opacity: 1,
+  });
+
+  let imageStyle = defaultImageStyle;
+
+  let wrapperStyle = mainWrapperStyle;
+  if (rounded) {
+    wrapperStyle = merge(mainWrapperStyle, roundedStyle);
+  } else if (circle) {
+    wrapperStyle = merge(mainWrapperStyle, circularStyle);
+  }
+
+  if (status === LOADED) {
+    imageStyle = merge(defaultImageStyle, loadedImageStyle);
+  }
+
+  debugger
+  const image = (<img
+      {...imageStyle}
+      src={src}
+      width={width}
+      height={height}
+      role="presentation"
+      onLoad={this.onLoad}
+      onError={this.onFail}
+      />);
+
+  let statusIndicator = null;
+  if (this.state.status === LOADING) {
+    statusIndicator = (<LoadingIndicator />);
+  } else if (this.state.status === FAILED) {
+    statusIndicator = (<ErrorIndicator />);
+  }
+
+  return (<div {...wrapperStyle}>
+    {statusIndicator}
+    {image}
+  </div>);
+}
+
+const Image = compose(
+  withState(
+    'status',
+    'setStatus',
+    ({ src })=> src? LOADING: PENDING
+  ),
+  withProps(
+    ({ setStatus }) => ({
+    onLoad() {
+      setStatus(LOADED);
+    },
+    onFail() {
+      setStatus(FAILED);
+    },
+    reset() {
+      setStatus(PENDING)
+    },
+    resetToLoading() {
+      setStatus(LOADING)
+    },
+  })),
+  lifecycle({
+    componentWillReceiveProps(nextProps) {
+      if(nextProps.src == null){
+        this.props.reset();
+      } else if(nextProps.src !== this.props.src) {
+        this.props.resetToLoading();
+      }
+    }
+  })
+)(SimpleImage);
 
 Image.propTypes = {
   src: string.isRequired,
@@ -174,58 +187,4 @@ Image.propTypes = {
   rounded: bool,
 };
 
-
-const crossArm = {
-  background: '#000',
-  width: 5,
-  height: 50,
-  position: 'absolute',
-  top: '30%',
-  left: '50%',
-};
-
-const failureStyle = style({
-  ...crossArm,
-  transform: 'rotate(45deg)',
-  ':before': {
-    content: '',
-    background: '#000',
-    width: 5,
-    height: 50,
-    position: 'absolute',
-    top: 0,
-    left: 0,
-    transform: 'rotate(-90deg)',
-  },
-});
-
-
-// failureStyle = merge(failureStyle, otherCrossArm);
-
-const ring = keyframes({
-  '0%': {
-    transform: 'rotate(0deg)',
-  },
-  '100%': {
-    transform: 'rotate(360deg)',
-  },
-});
-
-const loadingStyle = style({
-  position: 'absolute',
-  display: 'block',
-  width: 40,
-  height: 40,
-  top: '37%',
-  left: '37%',
-  borderRadius: 80,
-  boxShadow: '0 3px 0 0 #59ebff',
-  animation: `${ring} 1s linear infinite`,
-});
-
-Image.defaultProps = {
-  loadingStyle,
-  failureStyle,
-  circle: false,
-  rounded: true,
-};
+export default Image;
