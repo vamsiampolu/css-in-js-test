@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { style, keyframes, merge } from 'glamor';
 import { withState, withProps, compose, lifecycle } from 'recompose';
 
-const { string, number, bool, object } = PropTypes;
+const { string, number, bool, object, oneOf, func, element } = PropTypes;
 
 const defaultWrapperStyle = {
   width: 200,
@@ -69,6 +69,7 @@ export function ErrorIndicator() {
 export function SimpleImage(props) {
   const {
     src,
+    alt,
     width = 200,
     height = 200,
     rounded,
@@ -125,6 +126,7 @@ export function SimpleImage(props) {
   const image = (<img
       {...imageStyle}
       src={src}
+      alt={alt}
       width={width}
       height={height}
       role="presentation"
@@ -144,6 +146,20 @@ export function SimpleImage(props) {
     {image}
   </div>);
 }
+
+SimpleImage.propTypes = {
+  src: string,
+  width: number.isRequired,
+  height: number.isRequired,
+  alt: string.isRequired,
+  circle: bool,
+  rounded: bool,
+  status: oneOf([ PENDING, LOADING, LOADED, FAILED ]),
+  onLoad: func,
+  onFail: func,
+  loadingIndicator: element,
+  failureIndicator: element,
+};
 
 const Image = compose(
   withState(
