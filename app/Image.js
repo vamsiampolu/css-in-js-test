@@ -127,14 +127,14 @@ export function SimpleImage(props) {
       width={width}
       height={height}
       role="presentation"
-      onLoad={this.onLoad}
-      onError={this.onFail}
+      onLoad={onLoad}
+      onError={onFail}
       />);
 
   let statusIndicator = null;
-  if (this.state.status === LOADING) {
+  if (status === LOADING) {
     statusIndicator = (<LoadingIndicator />);
-  } else if (this.state.status === FAILED) {
+  } else if (status === FAILED) {
     statusIndicator = (<ErrorIndicator />);
   }
 
