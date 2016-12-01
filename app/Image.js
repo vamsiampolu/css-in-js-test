@@ -76,6 +76,8 @@ export function SimpleImage(props) {
     status,
     onLoad,
     onFail,
+    loadingIndicator = (<LoadingIndicator />),
+    errorIndicator = (<ErrorIndicator />)
   } = props;
 
   const mainWrapperStyle = style({
@@ -120,7 +122,6 @@ export function SimpleImage(props) {
     imageStyle = merge(defaultImageStyle, loadedImageStyle);
   }
 
-  debugger
   const image = (<img
       {...imageStyle}
       src={src}
@@ -133,9 +134,9 @@ export function SimpleImage(props) {
 
   let statusIndicator = null;
   if (status === LOADING) {
-    statusIndicator = (<LoadingIndicator />);
+    statusIndicator = loadingIndicator;
   } else if (status === FAILED) {
-    statusIndicator = (<ErrorIndicator />);
+    statusIndicator = errorIndicator;
   }
 
   return (<div {...wrapperStyle}>
