@@ -1,6 +1,8 @@
-import React, { Component, PropTypes } from 'react';
-import { style, keyframes, merge } from 'glamor';
+import React, { PropTypes } from 'react';
+import { style, merge } from 'glamor';
 import { withState, withProps, compose, lifecycle } from 'recompose';
+import LoadingIndicator from './LoadingIndicator';
+import ErrorIndicator from './ErrorIndicator';
 
 const { string, number, bool, object, oneOf, func, element } = PropTypes;
 
@@ -19,57 +21,12 @@ const LOADING = 'LOADING';
 const LOADED = 'LOADED';
 const FAILED = 'FAILED';
 
-export function LoadingIndicator() {
-  const ring = keyframes({
-    '0%': {
-      transform: 'rotate(0deg)',
-    },
-    '100%': {
-      transform: 'rotate(360deg)',
-    },
-  });
-
-  const loadingStyle = style({
-    position: 'absolute',
-    display: 'block',
-    width: 40,
-    height: 40,
-    top: '37%',
-    left: '37%',
-    borderRadius: 80,
-    boxShadow: '0 3px 0 0 #59ebff',
-    animation: `${ring} 1s linear infinite`,
-  });
-
-  return (<div {...loadingStyle} />);
-}
-
-export function ErrorIndicator() {
-  const crossArm = {
-    background: '#000',
-    width: 5,
-    height: 50,
-    position: 'absolute',
-    top: '30%',
-    left: '50%',
-    transform: 'rotate(45deg)',
-  };
-
-  const otherCrossArm = style({
-    ...crossArm,
-    transform: 'rotate(-45deg)',
-  });
-
-  return (<div>
-        <div {...style(crossArm)} />
-        <div {...otherCrossArm} />
-      </div>);
-}
-
 export function SimpleImage(props) {
   const {
     src,
     alt,
+    srcset,
+    sizes,
     width = 200,
     height = 200,
     rounded,
@@ -152,6 +109,8 @@ SimpleImage.propTypes = {
   width: number.isRequired,
   height: number.isRequired,
   alt: string.isRequired,
+  sizes: string,
+  srcset: string,
   circle: bool,
   rounded: bool,
   status: oneOf([ PENDING, LOADING, LOADED, FAILED ]),
