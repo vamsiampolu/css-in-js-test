@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { keyframes, style } from 'glamor';
 
 export default function LoadingIndicator() {
@@ -25,5 +25,3 @@ export default function LoadingIndicator() {
 
   return (<div {...loadingStyle} />);
 }
-
-

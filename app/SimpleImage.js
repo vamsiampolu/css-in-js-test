@@ -8,7 +8,7 @@ const LOADING = 'LOADING';
 const LOADED = 'LOADED';
 const FAILED = 'FAILED';
 
-const { string, number, bool, object, oneOf, func, element } = PropTypes;
+const { string, number, bool, oneOf, func, element } = PropTypes;
 
 export default function SimpleImage(props) {
   const {
@@ -24,18 +24,9 @@ export default function SimpleImage(props) {
     onLoad,
     onFail,
     loadingIndicator = (<LoadingIndicator />),
-    errorIndicator = (<ErrorIndicator />)
+    errorIndicator = (<ErrorIndicator />),
   } = props;
 
-  const defaultWrapperStyle = {
-    width: 200,
-    height: 200,
-    backgroundColor: 'white',
-    backgroundSize: 'contain',
-    backgroundRepeat: 'none',
-    boxSizing: 'border-box',
-    position: 'relative',
-  };
   const mainWrapperStyle = style({
     backgroundColor: 'white',
     backgroundSize: 'contain',
@@ -79,15 +70,15 @@ export default function SimpleImage(props) {
   }
 
   const image = (<img
-      {...imageStyle}
-      src={src}
-      alt={alt}
-      width={width}
-      height={height}
-      role="presentation"
-      onLoad={onLoad}
-      onError={onFail}
-      />);
+    {...imageStyle}
+    src={src}
+    alt={alt}
+    width={width}
+    height={height}
+    role="presentation"
+    onLoad={onLoad}
+    onError={onFail}
+  />);
 
   let statusIndicator = null;
   if (status === LOADING) {
@@ -97,9 +88,9 @@ export default function SimpleImage(props) {
   }
 
   return (<div {...wrapperStyle}>
-      {statusIndicator}
-      {image}
-      </div>);
+    {statusIndicator}
+    {image}
+  </div>);
 }
 
 SimpleImage.propTypes = {
@@ -111,9 +102,9 @@ SimpleImage.propTypes = {
   srcset: string,
   circle: bool,
   rounded: bool,
-  status: oneOf([ PENDING, LOADING, LOADED, FAILED ]),
+  status: oneOf([PENDING, LOADING, LOADED, FAILED]),
   onLoad: func,
   onFail: func,
   loadingIndicator: element,
-  failureIndicator: element,
-}
+  errorIndicator: element,
+};

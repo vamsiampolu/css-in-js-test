@@ -1,4 +1,4 @@
-import React, { PropTypes } from 'react';
+import React from 'react';
 import { style } from 'glamor';
 
 export default function ErrorIndicator() {
@@ -18,7 +18,7 @@ export default function ErrorIndicator() {
   });
 
   return (<div>
-      <div {...style(crossArm)} />
-      <div {...otherCrossArm} />
-      </div>);
+    <div {...style(crossArm)} />
+    <div {...otherCrossArm} />
+  </div>);
 }

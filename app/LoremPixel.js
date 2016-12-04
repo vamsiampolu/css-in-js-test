@@ -15,7 +15,7 @@ export default function LoremPixel({ url = 'http://lorempixel.com', width = 200,
     rounded={false}
     width={width}
     height={height}
-    alt="Placeholder image"
+    alt={alt}
     className={centerImage}
     src={src}
   />);
