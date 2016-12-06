@@ -8,7 +8,7 @@ const LOADING = 'LOADING';
 const LOADED = 'LOADED';
 const FAILED = 'FAILED';
 
-const { string, number, bool, oneOf, func, element } = PropTypes;
+const { string, number, bool, oneOf, func, element, object } = PropTypes;
 
 export default function SimpleImage(props) {
   const {
@@ -26,6 +26,16 @@ export default function SimpleImage(props) {
     loadingIndicator = (<LoadingIndicator />),
     errorIndicator = (<ErrorIndicator />),
   } = props;
+
+  let srcsetStr = null;
+  if(srcset != null) {
+    const dpi = Object.keys(srcset);
+    srcsetStr = dpi.reduce((val, item) => {
+      const res = val + ' ' +  srcset[item] + ' ' + item;
+      return res;
+    }, '');
+  }
+    console.log(srcsetStr);
 
   const mainWrapperStyle = style({
     backgroundColor: 'white',
@@ -72,6 +82,7 @@ export default function SimpleImage(props) {
   const image = (<img
     {...imageStyle}
     src={src}
+    srcSet={srcsetStr}
     alt={alt}
     width={width}
     height={height}
@@ -83,7 +94,7 @@ export default function SimpleImage(props) {
   let statusIndicator = null;
   if (status === LOADING) {
     statusIndicator = loadingIndicator;
-  } else if (status === FAILED) {
+  } else if(status === FAILED) {
     statusIndicator = errorIndicator;
   }
 
@@ -99,7 +110,6 @@ SimpleImage.propTypes = {
   height: number.isRequired,
   alt: string.isRequired,
   sizes: string,
-  srcset: string,
   circle: bool,
   rounded: bool,
   status: oneOf([PENDING, LOADING, LOADED, FAILED]),
